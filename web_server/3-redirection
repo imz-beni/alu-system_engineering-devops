@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Configures Nginx to redirect /redirect_me to a YouTube video
+apt-get -y update
+apt-get -y install nginx
+
+# Insert the redirection rule into the default site configuration
+# We use 'permanent' to trigger a 301 status code
+sed -i '/server_name _;/a \ \trewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;' /etc/nginx/sites-available/default
+
+# Restart the service so Nginx reads the new configuration
+service nginx restart
